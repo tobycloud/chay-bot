@@ -12,26 +12,24 @@ export default new Event({
   eventName: Events.ClientReady,
   async run(client) {
     const guild = await client.guilds.fetch("1116005776323002368");
-    (
-      await (
-        (await guild.channels.fetch("1145144080976846979")) as TextChannel
-      ).messages.fetch("1145170280000536626")
-    )
-      .createReactionCollector()
-      .on("collect", async (reaction, user) => {
-        if (reaction.partial) reaction = await reaction.fetch();
+    const channel = (await guild.channels.fetch(
+      "1145144080976846979"
+    )) as TextChannel;
+    const message = await channel.messages.fetch("1145170280000536626");
+    const collector = message.createReactionCollector({ dispose: true });
+    collector.on("collect", async (reaction, user) => {
+      if (reaction.partial) reaction = await reaction.fetch();
 
-        if (!reaction.emoji.id) return;
-        const roleID = roles[reaction.emoji.id];
-        if (roleID) await guild.members.cache.get(user.id)!.roles.add(roleID);
-      })
-      .on("remove", async (reaction, user) => {
-        if (reaction.partial) reaction = await reaction.fetch();
+      if (!reaction.emoji.id) return;
+      const roleID = roles[reaction.emoji.id];
+      if (roleID) await guild.members.cache.get(user.id)!.roles.add(roleID);
+    });
+    collector.on("remove", async (reaction, user) => {
+      if (reaction.partial) reaction = await reaction.fetch();
 
-        if (!reaction.emoji.id) return;
-        const roleID = roles[reaction.emoji.id];
-        if (roleID)
-          await guild.members.cache.get(user.id)!.roles.remove(roleID);
-      });
+      if (!reaction.emoji.id) return;
+      const roleID = roles[reaction.emoji.id];
+      if (roleID) await guild.members.cache.get(user.id)!.roles.remove(roleID);
+    });
   },
 });
