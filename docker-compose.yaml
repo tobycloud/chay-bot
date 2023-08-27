@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: chay-bot
-    restart: unless-stoppped
+    restart: unless-stopped
     volumes:
       - chay-bot-data:/app/data
 

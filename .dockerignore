@@ -6,9 +6,6 @@ npm-debug.log*
 # Dependencies
 node_modules/
 
-# Config
-config.ts
-
 # Data
 data/
 
