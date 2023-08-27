@@ -94,7 +94,7 @@ export default class Bot extends Client {
   public readonly db: QuickDB;
 }
 
-const folody = new Bot({
+const bot = new Bot({
   intents: Object.values(GatewayIntentBits) as GatewayIntentBits[],
   version: package_json.version,
   prefix: config.bot.prefix,
@@ -103,4 +103,4 @@ const folody = new Bot({
   managers: config.bot.managers,
 });
 
-folody.login(config.bot.token);
+bot.login(config.bot.token);

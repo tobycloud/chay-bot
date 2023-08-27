@@ -1,6 +1,6 @@
 {
-    "name": "folody-server-bot",
-    "module": "Folody.ts",
+    "name": "chay-bot",
+    "module": "bot.ts",
     "type": "module",
     "version": "0.11.1",
     "devDependencies": {
@@ -20,8 +20,8 @@
         "weird-to-normal-chars": "^1.8.3"
     },
     "scripts": {
-        "start": "tsx Folody",
-        "dev": "tsx watch Folody",
+        "start": "tsx bot",
+        "dev": "tsx watch bot",
         "init": "npm i && mkdir -p data && cp -n config.example.ts config.ts"
     }
 }

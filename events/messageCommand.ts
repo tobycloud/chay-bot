@@ -1,4 +1,4 @@
-import Bot from "Bot.js";
+import Bot from "bot.js";
 import {
   EmbedBuilder,
   Events,

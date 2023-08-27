@@ -1,4 +1,4 @@
-import Bot from "Bot";
+import Bot from "bot";
 import { Events, Interaction } from "discord.js";
 import Event from "modules/event";
 import { BaseExceptions, GuildExceptions } from "modules/exceptions";
@@ -9,8 +9,8 @@ async function slashCommand(interaction: Interaction) {
 
   if (interaction.user.bot) return;
 
-  const folody = interaction.client as Bot;
-  const command = folody.slashCommands.get(interaction.commandName);
+  const bot = interaction.client as Bot;
+  const command = bot.slashCommands.get(interaction.commandName);
 
   if (!command) return;
 
@@ -23,9 +23,9 @@ async function slashCommand(interaction: Interaction) {
         },
       ]);
 
-    if (!folody.owners.includes(interaction.user.id)) {
+    if (!bot.owners.includes(interaction.user.id)) {
       if (command.ownerOnly) throw new GuildExceptions.NoPermissions();
-      if (!folody.managers.includes(interaction.user.id) && command.managerOnly)
+      if (!bot.managers.includes(interaction.user.id) && command.managerOnly)
         throw new GuildExceptions.NoPermissions();
     }
 
@@ -35,9 +35,9 @@ async function slashCommand(interaction: Interaction) {
   if (interaction.isAutocomplete()) {
     if (!command.completion) return;
 
-    if (!folody.owners.includes(interaction.user.id)) {
+    if (!bot.owners.includes(interaction.user.id)) {
       if (command.ownerOnly) return;
-      if (!folody.managers.includes(interaction.user.id) && command.managerOnly)
+      if (!bot.managers.includes(interaction.user.id) && command.managerOnly)
         return;
     }
 
@@ -49,9 +49,9 @@ async function slashCommand(interaction: Interaction) {
   }
 
   if (interaction.isChatInputCommand()) {
-    if (!folody.owners.includes(interaction.user.id)) {
+    if (!bot.owners.includes(interaction.user.id)) {
       if (command.ownerOnly) throw new GuildExceptions.NoPermissions();
-      if (!folody.managers.includes(interaction.user.id) && command.managerOnly)
+      if (!bot.managers.includes(interaction.user.id) && command.managerOnly)
         throw new GuildExceptions.NoPermissions();
     }
 
@@ -64,7 +64,7 @@ async function slashCommand(interaction: Interaction) {
       if (!interaction.replied)
         interaction.reply("Có lỗi xảy ra khi chạy lệnh này :<");
       else interaction.followUp("Có lỗi xảy ra khi chạy lệnh này :<");
-      folody.reportError(error as { stack?: string; message: string });
+      bot.reportError(error as { stack?: string; message: string });
     }
   }
 }

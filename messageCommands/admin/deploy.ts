@@ -1,25 +1,25 @@
-import Bot from "Bot";
+import Bot from "bot";
 import { Message, SlashCommandBuilder } from "discord.js";
 import { MessageCommand } from "modules/command";
 
 // deploy slash commands
 async function deployCommand(message: Message) {
-  const folody = message.client as Bot;
+  const bot = message.client as Bot;
 
   const guildID = message.content.split(" ")[1];
 
   const slashCommands: SlashCommandBuilder[] = [];
-  folody.slashCommands.forEach((slashCommand) =>
+  bot.slashCommands.forEach((slashCommand) =>
     slashCommands.push(slashCommand.data)
   );
 
   if (guildID) {
     try {
-      await folody.application?.commands.set(slashCommands, guildID);
+      await bot.application?.commands.set(slashCommands, guildID);
     } catch (error) {
       return message.reply("Xin cái ID lmeo");
     }
-  } else folody.application?.commands.set(slashCommands);
+  } else bot.application?.commands.set(slashCommands);
 
   message.reply("Đã deploy slash commands");
 }

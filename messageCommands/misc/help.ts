@@ -1,25 +1,23 @@
 import { EmbedBuilder } from "@discordjs/builders";
-import Bot from "Bot";
+import Bot from "bot";
 import { inlineCode, Message } from "discord.js";
 import { MessageCommand } from "modules/command";
 import { Optional } from "modules/usageArgumentTypes";
 
 async function helpCommand(message: Message, commandName?: string) {
   if (!message.guild) return;
-  const folody = message.client as Bot;
+  const bot = message.client as Bot;
 
   if (commandName) {
-    const command = folody.messageCommands.get(commandName);
+    const command = bot.messageCommands.get(commandName);
     if (!command) return message.reply("Command not found.");
 
     let commandUsage = "";
 
     const embed = new EmbedBuilder({
-      title: inlineCode(
-        (await folody.getPrefix(message.guild.id)) + command.name
-      ),
+      title: inlineCode((await bot.getPrefix(message.guild.id)) + command.name),
       description: command.description,
-      color: folody.branding.embedColor,
+      color: bot.branding.embedColor,
       fields: [
         {
           name: "Category",
@@ -45,9 +43,7 @@ async function helpCommand(message: Message, commandName?: string) {
       {
         name: "Usage",
         value: inlineCode(
-          (await folody.getPrefix(message.guild.id)) +
-            command.name +
-            commandUsage
+          (await bot.getPrefix(message.guild.id)) + command.name + commandUsage
         ),
       },
     ]);
@@ -56,7 +52,7 @@ async function helpCommand(message: Message, commandName?: string) {
   }
 
   const categories = new Map<string, MessageCommand[]>();
-  for (const command of folody.messageCommands.values()) {
+  for (const command of bot.messageCommands.values()) {
     if (command.managerOnly || command.ownerOnly) continue;
 
     const category = command.category ?? "Uncategorized";
@@ -72,10 +68,10 @@ async function helpCommand(message: Message, commandName?: string) {
   const embed = new EmbedBuilder()
     .setAuthor({
       name: "Help",
-      iconURL: folody.user!.displayAvatarURL(),
+      iconURL: bot.user!.displayAvatarURL(),
     })
     .setTitle("Help")
-    .setColor(folody.branding.embedColor)
+    .setColor(bot.branding.embedColor)
     .setFooter({
       text: `Requested by ${message.author.tag}`,
       iconURL: message.author.displayAvatarURL(),

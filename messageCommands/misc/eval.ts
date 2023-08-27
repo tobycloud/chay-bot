@@ -1,4 +1,4 @@
-import Bot from "Bot";
+import Bot from "bot";
 import { codeBlock } from "discord.js";
 import { MessageCommand } from "modules/command";
 import { Required } from "modules/usageArgumentTypes";

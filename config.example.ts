@@ -1,4 +1,4 @@
-import { Config } from "Bot";
+import { Config } from "bot";
 
 const config: Config = {
   bot: {

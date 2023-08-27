@@ -1,9 +1,9 @@
 import { lstatSync, readdirSync } from "fs";
 
-import Bot from "Bot";
+import Bot from "bot";
 import { MessageCommand, SlashCommand } from "modules/command";
 
-export default async function loadCommands(folody: Bot) {
+export default async function loadCommands(bot: Bot) {
   async function loadCommand(root: string, item: string): Promise<any> {
     if (lstatSync(root + item).isDirectory()) {
       const newRoot = root + item + "/";
@@ -15,11 +15,11 @@ export default async function loadCommands(folody: Bot) {
       | MessageCommand
       | SlashCommand;
     if (command instanceof SlashCommand)
-      return folody.slashCommands.set(command.data.name, command);
+      return bot.slashCommands.set(command.data.name, command);
 
-    folody.messageCommands.set(command.name, command);
+    bot.messageCommands.set(command.name, command);
     command.aliases?.forEach((alias) =>
-      folody.messageCommands.set(alias, command)
+      bot.messageCommands.set(alias, command)
     );
   }
 
