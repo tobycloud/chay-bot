@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": false,
+    "module": "ESNext",
+    "rootDir": "./",
+    "baseUrl": "./",
+    "moduleResolution": "Node",
+    "paths": {
+      "*": ["*"]
+    },
+    "importHelpers": true,
+    "newLine": "lf",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  }
+}
