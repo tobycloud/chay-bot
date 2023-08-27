@@ -1,0 +1,14 @@
+version: "3.3"
+services:
+  bot:
+    image: chay-bot
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chay-bot
+    restart: unless-stoppped
+    volumes:
+      - chay-bot-data:/app/data
+
+volumes:
+  chay-bot-data:
