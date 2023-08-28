@@ -1,6 +1,5 @@
-import { EmbedBuilder } from "@discordjs/builders";
 import Bot from "bot";
-import { inlineCode, Message } from "discord.js";
+import { EmbedBuilder, inlineCode, Message } from "discord.js";
 import { MessageCommand } from "modules/command";
 import { Optional } from "modules/usageArgumentTypes";
 
@@ -14,22 +13,19 @@ async function helpCommand(message: Message, commandName?: string) {
 
     let commandUsage = "";
 
-    const embed = new EmbedBuilder({
-      title: inlineCode((await bot.getPrefix(message.guild.id)) + command.name),
-      description: command.description,
-      color: bot.branding.embedColor,
-      fields: [
-        {
-          name: "Category",
-          value: command.category ?? "None",
-          inline: true,
-        },
-      ],
-      footer: {
+    const embed = new EmbedBuilder()
+      .setTitle(inlineCode(bot.prefix + command.name))
+      .setDescription(command.description)
+      .setColor("Random")
+      .setFields({
+        name: "Category",
+        value: command.category ?? "None",
+        inline: true,
+      })
+      .setFooter({
         text: `Requested by ${message.author.tag}`,
-        icon_url: message.author.displayAvatarURL(),
-      },
-    });
+        iconURL: message.author.displayAvatarURL(),
+      });
 
     if (command.aliases.length > 0)
       embed.addFields([{ name: "Aliases", value: command.aliases.join(", ") }]);
@@ -42,9 +38,7 @@ async function helpCommand(message: Message, commandName?: string) {
     embed.addFields([
       {
         name: "Usage",
-        value: inlineCode(
-          (await bot.getPrefix(message.guild.id)) + command.name + commandUsage
-        ),
+        value: inlineCode(bot.prefix + command.name + commandUsage),
       },
     ]);
 
@@ -71,7 +65,7 @@ async function helpCommand(message: Message, commandName?: string) {
       iconURL: bot.user!.displayAvatarURL(),
     })
     .setTitle("Help")
-    .setColor(bot.branding.embedColor)
+    .setColor("Random")
     .setFooter({
       text: `Requested by ${message.author.tag}`,
       iconURL: message.author.displayAvatarURL(),
